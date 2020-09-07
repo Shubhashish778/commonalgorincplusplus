@@ -1,6 +1,6 @@
 //BINARY SEARCH using iteration
 
-int binarysearch(int arr[],int n)
+int binarysearch(int arr[],int n, int x)
 {  
     int left=0; int right=n-1;
     
@@ -8,9 +8,9 @@ int binarysearch(int arr[],int n)
     {
         int mid=int((left+right)/2);
         
-        if (arr[mid]==1) 
+        if (arr[mid]==x) 
            return mid;
-        if (arr[mid]<1)
+        if (arr[mid]<x)
         {
             left=mid+1;
         }
@@ -25,9 +25,9 @@ int binarysearch(int arr[],int n)
 
 //LINEAR SEARCH using pointers 
 
-int transitionPoint(int arr[],int n)
+int transitionPoint(int arr[],int n,int x)
 {  int j=0;
-   while (*(arr+j)!=1)
+   while (*(arr+j)!=x)
    {
        j+=1;
    }
