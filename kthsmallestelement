@@ -1,0 +1,113 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+int random(vector<int> &array, int l, int r);
+int Ksmall(vector<int>& array, int l, int r, int K);
+
+int main()
+{
+    int testcase; //no of test case
+    cin >> testcase;
+    while (testcase--)
+    {
+        int size;
+        cin >> size;
+        vector<int> array;
+        int S = size - 1;
+        while (size--)
+        {
+            int temp;
+            cin >> temp;
+            array.push_back(temp);           
+        }       
+        int K;
+        cin >> K;
+
+
+        cout << Ksmall(array, 0, S, K) << endl;
+
+    }
+
+}
+
+void swap(int* a, int* b)
+{
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+
+int standpar(vector<int>& array, int left, int right)
+{
+    int X = array[right];
+    int index = left;
+    for (int j = left; j < right; j++)
+    {
+        if (array[j] < X)
+        {
+            swap(&array[index], &array[j]);
+            index++;
+        }
+    }
+
+    swap(&array[index], &array[right]);
+    return index;
+}
+
+
+int randpar(vector<int>& array, int left, int right)
+{
+    int size = right - left + 1;
+    int pivot = left+(rand() % size);
+   // cout << "pivot " << pivot << endl;
+    swap(&array[pivot], &array[right]);
+    return standpar(array, left, right);
+}
+
+int Ksmall(vector<int>& array, int left, int right, int K)
+
+{
+    //cout << left << "  " << right << endl;
+    int pos = randpar(array, left, right);
+
+
+
+    //cout << "pos  " << pos << endl;
+
+   /* int size = array.size();
+    int in = 0;
+
+    while (in < size)
+    {
+
+        cout << array[in] << " ";
+        in += 1;
+    }
+    cout << endl;*/
+
+
+
+    if (pos == K - 1)
+    {
+        return array[pos];
+    }
+    if (pos < K - 1)
+
+        return Ksmall(array, pos + 1, right, K);
+    return Ksmall(array, left, pos - 1, K);
+
+}
+
+
+
+
+/*
+2
+6
+7 10 4 3 20 15
+3
+5
+7 10 4 20 15
+4*/
