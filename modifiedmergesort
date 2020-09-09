@@ -1,0 +1,122 @@
+#include<iostream>
+#include<vector>
+#include<string>
+using namespace std;
+void mergesort(vector<int>& arr, int l, int r);
+void merge(vector<int>& arr, int left, int right, int mid);
+int compare(int* a, int* b);
+int main()
+{
+    int testcase; 
+    cin >> testcase;
+    while (testcase--)
+    {
+        int size;
+        cin >> size;
+        vector<int> array(size); 
+
+        int index = 0;
+
+        while (index != size)
+        {
+            int temp;
+            cin >> temp;
+            array[index] = temp; 
+            index += 1;
+        }
+
+        mergesort(array, 0, size - 1);
+ 
+        string init = "";
+        for (auto i : array)
+        {
+            init += to_string(i);
+            //cout << i << endl;
+        }
+
+        cout<<init << endl;
+
+    }
+}
+
+int compare(int a, int b)
+{
+    string stra = to_string(a);
+    string strb = to_string(b);
+    int num1 = stoi(stra + strb);
+    int num2 = stoi(strb + stra);
+    if (num1 == num2)
+    {
+        return 0;
+    }
+
+    if (num1 < num2)
+    {   
+        return -1;
+    }
+
+    if (num1>num2)
+    {
+        return 1;
+    }
+
+}
+
+void merge(vector<int>& arr, int left, int right,int mid)
+{
+    
+    vector<int> L(arr.begin()+left,arr.begin()+ mid+1);
+    vector<int> R(arr.begin()+mid+1, arr.begin()+right+1 );
+    int i = 0;
+    int j = 0;
+    int index = left;
+    while (i != L.size() && j != R.size())
+    {
+        if (compare(L[i],R[j])>=0)
+        {
+            arr[index] = L[i];
+            i += 1;
+            index +=1 ;
+        }
+        else
+        {    
+            arr[index] = R[j];
+            j += 1;
+            index += 1;
+        }
+    }
+
+    while (i!=L.size())
+    {
+        arr[index] = L[i];
+        index+=1;
+        i+=1;
+    }
+
+    while (j != R.size())
+    {
+        arr[index] = R[j];
+        index+=1;
+        j+=1;
+    }
+}
+
+
+void mergesort(vector<int> & arr, int l, int r)
+{
+    if (l < r) 
+    {
+
+        int m = int((l + r) / 2);
+
+        mergesort(arr, l, m);
+        mergesort(arr, m + 1, r);
+        //cout << l <<" "<< r<<" " << m<<endl;
+        merge(arr, l, r,m);
+        /*for (auto i : arr)
+        {
+            cout << i << " ";
+        }
+        cout << endl;*/
+    }
+}
