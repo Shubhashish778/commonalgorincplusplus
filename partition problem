@@ -1,0 +1,76 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+int maxtime(vector<int> &arr, int count);
+int findo(vector<int>& arr, int max);
+int main()
+{
+    int testcase; 
+    cin >> testcase;
+    while (testcase--)
+    {
+        int K;
+        int size;
+        cin >> K >> size;
+        vector<int> arr(size);
+        int index = 0;
+        while (index != size)
+        {
+            int temp;
+            cin >> temp;
+            arr[index] = temp;
+            index += 1;
+        }
+        maxtime(arr, K);
+    }
+}
+
+int maxtime(vector<int>& array,int count)
+{
+    int MAXSUM = 0;
+    for (auto i : array)
+    {
+        MAXSUM += i;
+    }
+
+    int MAX = *max_element(array.begin(), array.end());
+
+    int low = MAX;
+    int high = MAXSUM;
+
+    while (low< high)
+    {
+        int  mid = (low + high) / 2;
+
+        if (findo(array, mid) <= count)
+        {
+            high = mid;
+        }
+        else
+        {
+            low = mid + 1;
+        }
+
+    }
+    cout << low<<endl;
+    return low;
+}
+
+int findo(vector<int>& array, int max)
+{
+    int count = 1;
+    
+    int sum = 0;
+
+    for (auto i : array)
+    {
+        sum += i;
+        if (sum > max)
+        {
+            count += 1;
+            sum = i;
+        }
+    }
+    return count;
+}
